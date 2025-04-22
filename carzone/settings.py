@@ -28,12 +28,16 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+LOGIN_REDIRECT_URL = 'dashboard'  # Redirect to dashboard after login
+
 
 # Application definition
 
 INSTALLED_APPS = [
+    'contacts.apps.ContactsConfig',
     'cars.apps.CarsConfig',
     'pages.apps.PagesConfig',
+    'accounts.apps.AccountsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -42,6 +46,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'ckeditor',  # Add this line to include the CKEditor app
     'django.contrib.humanize',  # Add this line to include the humanize app
+    'django.contrib.sites',  # Add this line to include the sites app
+    'allauth',  # Add this line to include the allauth app  
+    'allauth.account',  # Add this line to include the allauth account app
+    'allauth.socialaccount',  # Add this line to include the allauth social account app
+    
+    'allauth.socialaccount.providers.google',  # Add this line to include the Google provider for allauth
+    'allauth.socialaccount.providers.facebook',  # Add this line to include the Facebook provider for allauth
 ]
 
 MIDDLEWARE = [
@@ -52,6 +63,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+    'allauth.account.middleware.AccountMiddleware',  # <-- Add this line
+    
 ]
 
 ROOT_URLCONF = 'carzone.urls'
@@ -63,6 +77,7 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
@@ -129,8 +144,25 @@ STATICFILES_DIRS = [
 ]
 
 # Media files (User-uploaded files)
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/media/'
+MEDIA_ROOT=os.path.join(BASE_DIR,'media')
+MEDIA_URL='/media/'
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+
+# messages
+from django.contrib.messages import constants as messages
+MESSAGE_TAGS = {
+    messages.ERROR: 'danger',
+}
+
+SITE_ID = 1  # Add this line to set the site ID for allauth
+# Authentication backends for allauth
+
+# Email sending
+EMAIL_HOST='smtp.gmail.com'
+EMAIL_PORT=587
+EMAIL_HOST_USER='har@gmail.com'
+EMAIL_HOST_PASSWORD='har1'
+EMAIL_USE_TLS=True 
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
