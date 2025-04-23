@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 import os
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,12 +22,20 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-q8js7t0j*$prd9%0c2n610927q=d6d_+8t1-ea0z!uby21j^_0'
+SECRET_KEY = os.environ.get('SECRET_KEY', default= 'q8js7t0j*$prd9%0c2n610927q=d6d_+8t1-ea0z!uby21j^_0')  # Use environment variable for secret key
+# For local development, you can set a default value or use a placeholder
+# SECRET_KEY = 'django-insecure-q8js7t0j*$prd9%0c2n610927q=d6d_+8t1-ea0z!uby21j^_0'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = 'RENDER' not in os.environ  # Set DEBUG based on environment variable
+# For local development, you can set DEBUG to True or False as needed
 
 ALLOWED_HOSTS = []
+
+RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
+if RENDER_EXTERNAL_HOSTNAME:
+    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
+    
 
 LOGIN_REDIRECT_URL = 'dashboard'  # Redirect to dashboard after login
 
@@ -64,7 +73,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
-    'allauth.account.middleware.AccountMiddleware',  # <-- Add this line
+    'allauth.account.middleware.AccountMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     
 ]
 
@@ -101,6 +111,8 @@ DATABASES = {
         'HOST': 'localhost',
     }
 }
+
+DATABASES['default'] = dj_database_url.parse("postgresql://carzone_django_user:QRDAoUFUN8nX4gwg33TUMY6iaoShrTcS@dpg-d04g3qk9c44c739k5rvg-a.oregon-postgres.render.com/carzone_django")
 
 
 # Password validation
@@ -142,6 +154,9 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'carzone/static'),        
 ]
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Media files (User-uploaded files)
 MEDIA_ROOT=os.path.join(BASE_DIR,'media')
