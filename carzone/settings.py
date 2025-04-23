@@ -30,7 +30,8 @@ SECRET_KEY = os.environ.get('SECRET_KEY', default= 'q8js7t0j*$prd9%0c2n610927q=d
 DEBUG = 'RENDER' not in os.environ  # Set DEBUG based on environment variable
 # For local development, you can set DEBUG to True or False as needed
 
-ALLOWED_HOSTS = []
+
+ALLOWED_HOSTS = ['carweb-we64.onrender.com']
 
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 if RENDER_EXTERNAL_HOSTNAME:
