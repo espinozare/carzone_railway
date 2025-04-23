@@ -1,17 +1,16 @@
-{% extends 'base.html' %} 
-{% block title %} | Home {% endblock %}
+{% extends 'base.html' %}
 
+{% block title %} | Home {% endblock %}
 {% block content %}
 
 {% load humanize %}
 {% load static %}
-
 <!-- Banner start -->
 <div class="banner" id="banner">
     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner banner-slider-inner text-center">
             <div class="carousel-item banner-max-height active item-bg">
-                <img class="d-block w-100 h-100" src="img/car-1.jpg" alt="banner">
+                <img class="d-block w-100 h-100" src="{% static 'img/car-1.jpg' %}" alt="banner">
                 <div class="carousel-content container banner-info-2 bi-2 text-left">
                     <h3>Wow Factor Standard</h3>
                     <h5>Allow us to guide you through the innovative stress<br>
@@ -20,7 +19,7 @@
                 </div>
             </div>
             <div class="carousel-item banner-max-height item-bg">
-                <img class="d-block w-100 h-100" src="img/car-2.jpg" alt="banner">
+                <img class="d-block w-100 h-100" src="{% static 'img/car-2.jpg' %}" alt="banner">
                 <div class="carousel-content container banner-info-2 bi-2 text-left">
                     <h3>Explore Your Dream Car</h3>
                     <h5>Allow us to guide you through the innovative stress<br>
@@ -29,7 +28,7 @@
                 </div>
             </div>
             <div class="carousel-item banner-max-height item-bg">
-                <img class="d-block w-100 h-100" src="img/car-3.jpg" alt="banner">
+                <img class="d-block w-100 h-100" src="{% static 'img/car-3.jpg' %}" alt="banner">
                 <div class="carousel-content container banner-info-2 bi-2 text-left">
                     <h3>We Are Wheel</h3>
                     <h5>Allow us to guide you through the innovative stress<br>
@@ -44,6 +43,7 @@
                 <div class="form-group">
                     <input type="text" name="keyword" placeholder="Search by name" class="form-control">
                 </div>
+
                 <div class="form-group">
                     <select class="form-control search-fields" name="model">
                         <option selected="true" disabled="disabled">Model</option>
@@ -123,9 +123,9 @@
                             <a href="{% url 'car_detail' car.id %}" class="car-img">
                                 <div class="tag-2">Featured</div>
                                 <div class="price-box">
-                                    <span>${{car.price | intcomma }}</span>
+                                    <span>${{car.price | intcomma}}</span>
                                 </div>
-                                <img class="d-block w-100" src="{{car.car_photo.url}}" alt="car" style="min-height: 262px; max-height: 262px;">
+                                <img class="d-block w-100" src="{{car.car_photo.url}}" alt="car" style="min-height: 262px; max-height:262px;">
                             </a>
                             <div class="carbox-overlap-wrapper">
                                 <div class="overlap-box">
@@ -162,27 +162,28 @@
                         </div>
                         <div class="detail">
                             <h1 class="title">
-                                <a href="{% url 'car_detail' car.id %}">{{ car.car_title }}</a>
+                                <a href="{% url 'car_detail' car.id %}">{{car.car_title}}</a>
                             </h1>
                             <div class="location">
                                 <a href="{% url 'car_detail' car.id %}">
-                                    <i class="flaticon-pin"></i>{{car.state}},{{car.city}}
+                                    <i class="flaticon-pin"></i>{{car.state}}, {{car.city}}
                                 </a>
                             </div>
                             <ul class="facilities-list clearfix">
                                 <li>{{car.fuel_type}}</li>
-                                <li>{{car.miles | intcomma }}</li>
+                                <li>{{car.miles | intcomma}} km</li>
                                 <li>{{car.transmission}}</li>
                                 <li>{{car.body_style}}</li>
-                                <li>{{car.colour}}</li>
+                                <li>{{car.colours}}</li>
                                 <li>{{car.year}}</li>
                             </ul>
                         </div>
                     </div>
-                </div>   
-                {% endfor %}       
-            
-                <div class="slick-btn">
+                </div>
+                {% endfor %}
+
+            </div>
+            <div class="slick-btn">
                 <div class="slick-prev slick-arrow-buton sab-4">
                     <i class="fa fa-angle-left"></i>
                 </div>
@@ -204,13 +205,13 @@
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
         </div>
         <div class="row">
-        {% for car in all_cars %}
+          {% for car in all_cars %}
             <div class="col-lg-4 col-md-6">
                 <div class="car-box">
                     <div class="car-thumbnail">
                         <a href="{% url 'car_detail' car.id %}" class="car-img">
                             <div class="tag">For Sale</div>
-                            <img class="d-block w-100" src="{{car.car_photo.url}}" alt="car" style="min-height: 262px; max-height: 262px;">
+                            <img class="d-block w-100" src="{{car.car_photo.url}}" alt="car" style="min-height:262px; max-height:262px;">
                             <div class="facilities-list clearfix">
                                 <ul>
                                     <li>
@@ -264,7 +265,7 @@
                         </h1>
                         <div class="location">
                             <a href="{% url 'car_detail' car.id %}">
-                                <i class="flaticon-pin"></i>{{car.state}},{{car.city}}  
+                                <i class="flaticon-pin"></i>{{car.state}} , {{car.city}}
                             </a>
                         </div>
                     </div>
@@ -273,12 +274,12 @@
                             <p class="cartype">{{car.body_style}}</p>
                         </div>
                         <div class="pull-right">
-                            <p class="price">$ {{car.price | intcomma}}</p>
+                            <p class="price">${{car.price | intcomma}}</p>
                         </div>
                     </div>
                 </div>
             </div>
-        {% endfor %}
+            {% endfor %}
         </div>
     </div>
 </div>
@@ -296,12 +297,12 @@
         <!-- Slick slider area start -->
         <div class="slick-slider-area clearfix">
             <div class="row slick-carousel" data-slick='{"slidesToShow": 4, "responsive":[{"breakpoint": 1024,"settings":{"slidesToShow": 2}}, {"breakpoint": 768,"settings":{"slidesToShow": 1}}]}'>
-                {% for team in teams %}
+            {% for team in teams %}
                 <div class="slick-slide-item">
                     <div class="team-1">
                         <div class="photo">
                             <a href="#">
-                                <img src="{{ team.photo.url }}" alt="team-1" class="img-fluid">
+                                <img src="{{team.photo.url}}" alt="team-1" class="img-fluid" style="min-height: 262px; max-height: 262px;">
                             </a>
                             <div class="social-list clearfix">
                                 <a href="{{team.facebook_link}}" target="_blank" class="facebook-bg"><i class="fa fa-facebook"></i></a>
@@ -315,7 +316,7 @@
                         </div>
                     </div>
                 </div>
-                {% endfor %}
+              {% endfor %}
             </div>
         </div>
     </div>
@@ -340,16 +341,6 @@
 <!-- Intro section end -->
 
 
-
-<!-- Full Page Search -->
-<div id="full-page-search">
-    <button type="button" class="close">×</button>
-    <form action="https://storage.googleapis.com/theme-vessel/carhouse/index.html#" class="search-header">
-        <input type="search" value="" placeholder="type keyword(s) here. Eg: audi, benz etc" />
-        <button type="submit" class="btn btn-sm button-theme">Search</button>
-    </form>
-</div>
-
 <!-- Car Overview Modal -->
 <div class="car-model-2">
     <div class="modal fade" id="carOverviewModal" tabindex="-1" role="dialog" aria-labelledby="carOverviewModalLabel" aria-hidden="true">
@@ -368,8 +359,8 @@
                     <div class="row modal-raw">
                         <div class="col-lg-6 modal-left">
                             <div class="item active">
-                                <img src="img/car-13.jpg" alt="best-car" class="img-fluid modalLabel-1">
-                                <img src="img/car-14.jpg" alt="best-car" class="img-fluid modalLabel-2">
+                                <img src="{% static 'img/car-13.jpg' %}" alt="best-car" class="img-fluid modalLabel-1">
+                                <img src="{% static 'img/car-14.jpg' %}" alt="best-car" class="img-fluid modalLabel-2">
                                 <div class="sobuz">
                                     <div class="price-box" style="padding-bottom: 5px;">
                                         <span class="del-2">$1050.00</span>
