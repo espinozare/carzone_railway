@@ -12,7 +12,8 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 import os
-import dj_database_url
+import dj_database_url  # Import dj_database_url for database configuration
+from decouple import config  # Import config for environment variable management
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -22,22 +23,22 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY', default= 'q8js7t0j*$prd9%0c2n610927q=d6d_+8t1-ea0z!uby21j^_0')  # Use environment variable for secret key
+#SECRET_KEY = os.environ.get('SECRET_KEY', default= 'q8js7t0j*$prd9%0c2n610927q=d6d_+8t1-ea0z!uby21j^_0')  # Use environment variable for secret key
 # For local development, you can set a default value or use a placeholder
-# SECRET_KEY = 'django-insecure-q8js7t0j*$prd9%0c2n610927q=d6d_+8t1-ea0z!uby21j^_0'
+SECRET_KEY = config("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = 'RENDER' not in os.environ  # Set DEBUG based on environment variable
+#DEBUG = 'RENDER' not in os.environ  # Set DEBUG based on environment variable
 # For local development, you can set DEBUG to True or False as needed
-#DEBUG = True  # Set to False in production
+DEBUG = config("DEBUG", cast=bool)  # Use environment variable for DEBUG
 
-#ALLOWED_HOSTS = []
+ALLOWED_HOSTS = config("ALLOWED_HOSTS").split(",")  # Use environment variable for allowed hosts    
 # ALLOWED_HOSTS = ['localhost', '   
-ALLOWED_HOSTS = ['carweb-we64.onrender.com']
+#ALLOWED_HOSTS = ['carweb-we64.onrender.com']
 
-RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
-if RENDER_EXTERNAL_HOSTNAME:
-    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
+#RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
+#if RENDER_EXTERNAL_HOSTNAME:
+#    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
     
 
 LOGIN_REDIRECT_URL = 'dashboard'  # Redirect to dashboard after login
@@ -116,7 +117,8 @@ DATABASES = {
 }
 
 
-DATABASES['default'] = dj_database_url.parse("postgresql://carzone_django_user:QRDAoUFUN8nX4gwg33TUMY6iaoShrTcS@dpg-d04g3qk9c44c739k5rvg-a.oregon-postgres.render.com/carzone_django")
+DATABASES['default'] = dj_database_url.parse(config('DATABASE_URL'))  # Use dj_database_url to parse the database URL from environment variable
+
 
 
 
