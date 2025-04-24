@@ -29,8 +29,10 @@ SECRET_KEY = os.environ.get('SECRET_KEY', default= 'q8js7t0j*$prd9%0c2n610927q=d
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = 'RENDER' not in os.environ  # Set DEBUG based on environment variable
 # For local development, you can set DEBUG to True or False as needed
+#DEBUG = True  # Set to False in production
 
-
+#ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = ['localhost', '   
 ALLOWED_HOSTS = ['carweb-we64.onrender.com']
 
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
@@ -113,7 +115,10 @@ DATABASES = {
     }
 }
 
+
 DATABASES['default'] = dj_database_url.parse("postgresql://carzone_django_user:QRDAoUFUN8nX4gwg33TUMY6iaoShrTcS@dpg-d04g3qk9c44c739k5rvg-a.oregon-postgres.render.com/carzone_django")
+
+
 
 
 # Password validation
@@ -156,13 +161,14 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'carzone/static'),        
 ]
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static_files')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Media files (User-uploaded files)
 MEDIA_ROOT=os.path.join(BASE_DIR,'media')
 MEDIA_URL='/media/'
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+
 
 # messages
 from django.contrib.messages import constants as messages
