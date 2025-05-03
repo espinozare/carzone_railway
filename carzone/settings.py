@@ -127,16 +127,16 @@ WSGI_APPLICATION = 'carzone.wsgi.application'
 
 if ENVIRONMENT == 'production' or POSTGRES_LOCALLY:
     DATABASES = {
-        DATABASES['default'] = dj_database_url.parse(config('DATABASE_URL'))  # Use dj_database_url to parse the database URL from environment variable
+        'default': dj_database_url.parse(config('DATABASE_URL'))
     }
 else:
     DATABASES = {
         'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'carzone_db',
-        'USER': 'code2025',
-        'PASSWORD': '12AtmosR',
-        'HOST': 'localhost',
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'carzone_db',
+            'USER': 'code2025',
+            'PASSWORD': '12AtmosR',
+            'HOST': 'localhost',
         }
     }
 
