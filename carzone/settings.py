@@ -44,11 +44,11 @@ else:
 
 ALLOWED_HOSTS = [
                 'localhost', '127.0.0.1', 
-                'web-npd1f3752jkq.up-de-fra1-k8s-1.apps.run-on-seenode.com/'
+                'web-irgp8xrelz3i.up-de-fra1-k8s-1.apps.run-on-seenode.com/'
                 ]
 
 CSRF_TRUSTED_ORIGINS = [ 
-                'https://web-npd1f3752jkq.up-de-fra1-k8s-1.apps.run-on-seenode.com/',
+                'https://web-irgp8xrelz3i.up-de-fra1-k8s-1.apps.run-on-seenode.com/',
                 ]
 
    
