@@ -11,9 +11,16 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+import dj_database_url
 import os
-import dj_database_url  # Import dj_database_url for database configuration
-from decouple import config  # Import config for environment variable management
+from environ import Env, config
+env = Env()
+env.read_env()
+
+ENVIRONMENT = env('ENVIRONMENT', default="production")
+
+# Set to True for connecting to remote database from local environment 
+POSTGRES_LOCALLY = False
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -23,22 +30,29 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-#SECRET_KEY = os.environ.get('SECRET_KEY', default= 'q8js7t0j*$prd9%0c2n610927q=d6d_+8t1-ea0z!uby21j^_0')  # Use environment variable for secret key
 # For local development, you can set a default value or use a placeholder
-SECRET_KEY = config("SECRET_KEY")
+SECRET_KEY = env("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-#DEBUG = 'RENDER' not in os.environ  # Set DEBUG based on environment variable
-# For local development, you can set DEBUG to True or False as needed
-DEBUG = config("DEBUG", cast=bool)  # Use environment variable for DEBUG
+if ENVIRONMENT == 'development':
+    DEBUG = True 
+else:
+    DEBUG = False
 
-ALLOWED_HOSTS = config("ALLOWED_HOSTS").split(",")  # Use environment variable for allowed hosts    
-# ALLOWED_HOSTS = ['localhost', '   
-#ALLOWED_HOSTS = ['carweb-we64.onrender.com']
+ALLOWED_HOSTS = [
+                'localhost', '127.0.0.1', 
+                'example.com'
+                ]
 
-#RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
-#if RENDER_EXTERNAL_HOSTNAME:
-#    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
+CSRF_TRUSTED_ORIGINS = [ 
+                'https://example.com',
+                ]
+
+   
+
+
+
+
     
 
 LOGIN_REDIRECT_URL = 'dashboard'  # Redirect to dashboard after login
@@ -47,6 +61,7 @@ LOGIN_REDIRECT_URL = 'dashboard'  # Redirect to dashboard after login
 # Application definition
 
 INSTALLED_APPS = [
+    
     'contacts.apps.ContactsConfig',
     'cars.apps.CarsConfig',
     'pages.apps.PagesConfig',
@@ -192,3 +207,5 @@ EMAIL_USE_TLS=True
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
