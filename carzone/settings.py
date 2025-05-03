@@ -12,9 +12,10 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 import dj_database_url
+from decouple import config  # Import config for environment variable management
 import os
-from environ import Env, config
-env = Env()
+import environ
+env = environ.Env()
 env.read_env()
 
 ENVIRONMENT = env('ENVIRONMENT', default="production")
@@ -38,6 +39,8 @@ if ENVIRONMENT == 'development':
     DEBUG = True 
 else:
     DEBUG = False
+
+
 
 ALLOWED_HOSTS = [
                 'localhost', '127.0.0.1', 
@@ -121,18 +124,27 @@ WSGI_APPLICATION = 'carzone.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
+
+if ENVIRONMENT == 'production' or POSTGRES_LOCALLY:
+    DATABASES = {
+        DATABASES['default'] = dj_database_url.parse(config('DATABASE_URL'))  # Use dj_database_url to parse the database URL from environment variable
+    }
+else:
+    DATABASES = {
+        'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'carzone_db',
         'USER': 'code2025',
         'PASSWORD': '12AtmosR',
         'HOST': 'localhost',
+        }
     }
-}
 
 
-DATABASES['default'] = dj_database_url.parse(config('DATABASE_URL'))  # Use dj_database_url to parse the database URL from environment variable
+
+
+
+
 
 
 
