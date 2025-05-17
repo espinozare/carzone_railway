@@ -44,11 +44,11 @@ else:
 
 ALLOWED_HOSTS = [
                 'localhost', '127.0.0.1', 
-                'web-ldokobv67dez.up-de-fra1-k8s-1.apps.run-on-seenode.com',
+                "carweb-p3sg.onrender.com",
                 ]
 
 CSRF_TRUSTED_ORIGINS = [ 
-                'https://web-ldokobv67dez.up-de-fra1-k8s-1.apps.run-on-seenode.com',
+                'https://carweb-p3sg.onrender.com',
                 ]
 
    
