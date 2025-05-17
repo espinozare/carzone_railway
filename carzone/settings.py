@@ -21,7 +21,7 @@ env.read_env()
 ENVIRONMENT = env('ENVIRONMENT', default="production")
 
 # Set to True for connecting to remote database from local environment 
-POSTGRES_LOCALLY = False
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -124,6 +124,7 @@ WSGI_APPLICATION = 'carzone.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+POSTGRES_LOCALLY = False
 
 if ENVIRONMENT == 'production' or POSTGRES_LOCALLY:
     DATABASES = {
